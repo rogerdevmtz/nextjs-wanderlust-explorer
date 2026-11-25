@@ -1,5 +1,16 @@
 import type { Category } from "@/types/experience";
 
+export const filterKeys = ["search", "category", "destination"] as const;
+
+export function getCatalogFilterQuery(params: Pick<URLSearchParams, "get">) {
+  const filters = new URLSearchParams();
+  for (const key of filterKeys) {
+    const value = params.get(key);
+    if (value) filters.set(key, value);
+  }
+  return filters.toString();
+}
+
 export const categoryLabels: Record<Category, string> = {
   Adventure: "Aventura",
   Culture: "Cultura",

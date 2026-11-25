@@ -35,6 +35,7 @@ Los favoritos se guardan en el `useState` del proveedor del layout, se comparten
 
 - [GetYourGuide](https://www.getyourguide.com/) inspiró la navegación por categorías y la organización de un catálogo con accesos directos.
 - [Viator](https://www.viator.com/) inspiró la jerarquía de las tarjetas, con destino, valoración y precio fáciles de comparar.
+- [Ocean Crest](https://ocean-crest.webflow.io/) inspiró el ritmo entre fotos panorámicas, composiciones editoriales y selección horizontal. Se adaptó al catálogo de Wanderlust con imágenes propias y movimiento reducido cuando lo pide el sistema.
 
 Las maquetas de Wanderlust Explorer en Stitch guiaron la paleta marítima, el uso de Newsreader y Manrope y la composición de la portada, las fichas y la bitácora.
 

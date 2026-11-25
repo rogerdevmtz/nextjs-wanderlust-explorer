@@ -10,7 +10,7 @@ import { categoryLabels, countryLabel } from "@/lib/catalog";
 import { categories } from "@/types/experience";
 
 export function Explorer() {
-  const { search, category, destination, hasFilters, results, updateFilters, resetFilters } = useExperiences();
+  const { search, category, destination, hasFilters, results, detailQuery, updateFilters, resetFilters } = useExperiences();
   const selectedCategory = categories.find((item) => item.toLowerCase() === category);
   const activeFilters = [
     { key: "search", field: "experience-search", label: search.trim() || search, name: "búsqueda" },
@@ -60,7 +60,7 @@ export function Explorer() {
             <p role="status">{results.length} {results.length === 1 ? "experiencia" : "experiencias"}</p>
           </div>
         </div>
-        {results.length ? <ExperienceGrid experiences={results} /> : (
+        {results.length ? <ExperienceGrid experiences={results} detailQuery={detailQuery} /> : (
           <EmptyState icon={<SearchX aria-hidden="true" />} title="No se encontraron resultados"
             description="Prueba otro término o cambia los filtros de categoría y destino.">
             <button type="button" className="button" onClick={clearAll}>Ver todas las experiencias</button>

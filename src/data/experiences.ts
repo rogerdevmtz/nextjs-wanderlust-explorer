@@ -39,7 +39,7 @@ export const experiences: readonly Experience[] = [
     destination: "El Chaltén, Argentina",
     price: 135,
     rating: 5,
-    imageUrl: "/images/patagonia.webp",
+    imageUrl: "/images/fitz-roy-al-amanecer.webp",
   },
   {
     id: "ritual-de-hammam-en-la-medina",

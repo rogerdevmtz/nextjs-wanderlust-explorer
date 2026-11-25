@@ -2,7 +2,7 @@
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { experiences } from "@/data/experiences";
-import { countryLabel } from "@/lib/catalog";
+import { countryLabel, filterKeys, getCatalogFilterQuery } from "@/lib/catalog";
 import { categories } from "@/types/experience";
 
 const collator = new Intl.Collator("es");
@@ -11,7 +11,6 @@ export const cities = [...new Set(destinations.map(([city]) => city))].sort(coll
 export const countries = [...new Set(destinations.map(([, country]) => country))]
   .sort((a, b) => collator.compare(countryLabel(a), countryLabel(b)));
 
-const filterKeys = ["search", "category", "destination"] as const;
 type Filters = Partial<Record<(typeof filterKeys)[number], string>>;
 
 function normalize(value: string) {
@@ -63,6 +62,7 @@ export function useExperiences() {
     category: category ? category.toLowerCase() : rawCategory,
     destination,
     hasFilters: Boolean(search || rawCategory || rawDestination),
+    detailQuery: getCatalogFilterQuery(params),
     results,
     updateFilters,
     resetFilters: () => updateFilters({ search: "", category: "", destination: "" }),

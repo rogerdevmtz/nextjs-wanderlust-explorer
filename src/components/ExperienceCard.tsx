@@ -22,12 +22,14 @@ export function FavoriteButton({ title, saved, onToggle, detailed = false }: {
   );
 }
 
-export const ExperienceCard = memo(function ExperienceCard({ experience, saved, toggle }: {
+export const ExperienceCard = memo(function ExperienceCard({ experience, saved, toggle, detailQuery }: {
   experience: Experience;
   saved: boolean;
   toggle: (id: string) => void;
+  detailQuery?: string;
 }) {
   const { id, title, description, category, destination, price, rating, imageUrl } = experience;
+  const href = `/experiences/${id}${detailQuery ? `?${detailQuery}` : ""}`;
   return (
     <article className="experience-card">
       <div className="card-photo">
@@ -42,7 +44,7 @@ export const ExperienceCard = memo(function ExperienceCard({ experience, saved, 
             <Star aria-hidden="true" size={15} />{rating.toFixed(1).replace(".", ",")}
           </span>
         </div>
-        <h3><Link href={`/experiences/${id}`} prefetch={false}>{title}</Link></h3>
+        <h3><Link href={href} prefetch={false}>{title}</Link></h3>
         <p className="card-description">{description}</p>
         <div className="card-meta">
           <span className="card-price"><strong>{priceLabel(price)}</strong> <span>/ persona</span></span>

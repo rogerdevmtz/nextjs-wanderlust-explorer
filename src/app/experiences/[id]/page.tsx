@@ -1,11 +1,15 @@
-import { ArrowLeft, MapPin, Star } from "lucide-react";
+import { ArrowRight, MapPin, Star } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { ExperienceGrid } from "@/components/ExperienceGrid";
+import { ExplorerReturnLink, FilteredExplorerReturnLink } from "@/components/ExplorerReturnLink";
 import { SaveExperience } from "@/components/SavedExperiences";
 import { experiences } from "@/data/experiences";
 import { categoryLabels, destinationLabel, priceLabel } from "@/lib/catalog";
+import type { Experience } from "@/types/experience";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -24,10 +28,20 @@ export default async function ExperiencePage({ params }: Props) {
   const experience = findExperience((await params).id);
   if (!experience) notFound();
   const { id, title, imageUrl, description, destination, category, price, rating } = experience;
+  const related: Experience[] = [];
+  const shownDestinations = new Set([destination]);
+  for (const item of experiences) {
+    if (item.category !== category || shownDestinations.has(item.destination)) continue;
+    related.push(item);
+    shownDestinations.add(item.destination);
+    if (related.length === 3) break;
+  }
 
   return (
     <div className="container inner-page">
-      <Link href="/experiences" className="text-button back-link"><ArrowLeft aria-hidden="true" size={17} /> Volver al explorador</Link>
+      <Suspense fallback={<ExplorerReturnLink />}>
+        <FilteredExplorerReturnLink />
+      </Suspense>
       <article className="detail-layout">
         <div className="detail-panel">
           <header className="detail-heading">
@@ -53,6 +67,17 @@ export default async function ExperiencePage({ params }: Props) {
           <figcaption>Imagen ilustrativa de {destinationLabel(destination)}</figcaption>
         </figure>
       </article>
+      {related.length > 0 && (
+        <section className="related-section" aria-labelledby="related-title">
+          <div className="section-heading">
+            <h2 id="related-title">Más de <em>{categoryLabels[category].toLowerCase()}</em></h2>
+            <Link href={`/experiences?category=${category.toLowerCase()}`} className="text-button">
+              Explorar la categoría <ArrowRight aria-hidden="true" size={17} />
+            </Link>
+          </div>
+          <ExperienceGrid experiences={related} />
+        </section>
+      )}
     </div>
   );
 }

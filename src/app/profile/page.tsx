@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Perfil" };
 export default function ProfilePage() {
   return (
     <div className="container inner-page">
-      <header className="page-heading">
+      <header className="page-heading profile-heading">
         <h1>Mi perfil <em>y bitácora</em></h1>
         <p>Perfil de demostración</p>
       </header>
