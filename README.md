@@ -2,6 +2,8 @@
 
 Explorador de viajes creado para el reto de React y Next.js de 4Geeks Academy. Permite descubrir 100 experiencias de demostración, compartir una búsqueda por URL y guardar favoritos durante la visita.
 
+[Especificaciones de 4Geeks y guía para continuar el proyecto](CLAUDE.md)
+
 ## Ejecutar en local
 
 Requiere Node.js 20.9 o superior y npm. Desde la raíz del proyecto:
@@ -36,6 +38,8 @@ Los favoritos se guardan en el `useState` del proveedor del layout, se comparten
 - [GetYourGuide](https://www.getyourguide.com/) inspiró la navegación por categorías y la organización de un catálogo con accesos directos.
 - [Viator](https://www.viator.com/) inspiró la jerarquía de las tarjetas, con destino, valoración y precio fáciles de comparar.
 - [Ocean Crest](https://ocean-crest.webflow.io/) inspiró el ritmo entre fotos panorámicas, composiciones editoriales y selección horizontal. Se adaptó al catálogo de Wanderlust con imágenes propias y movimiento reducido cuando lo pide el sistema.
+
+La revisión Editorial Voyage, basada en las nuevas maquetas de Stitch, introdujo una búsqueda directa desde Inicio, categorías fotográficas y la galería de la experiencia destacada de Hvar.
 
 Las maquetas de Wanderlust Explorer en Stitch guiaron la paleta marítima, el uso de Newsreader y Manrope y la composición de la portada, las fichas y la bitácora.
 

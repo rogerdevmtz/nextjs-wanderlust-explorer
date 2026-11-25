@@ -1,6 +1,7 @@
 import { ChevronDown, MapPin, Shapes } from "lucide-react";
-import { cities, countries } from "@/hooks/useExperiences";
-import { categoryLabels, countryLabel } from "@/lib/catalog";
+import { DestinationOptions } from "@/components/DestinationOptions";
+import { cities, countries } from "@/lib/catalog-options";
+import { categoryLabels } from "@/lib/catalog";
 import { categories } from "@/types/experience";
 
 type Props = {
@@ -36,12 +37,7 @@ export function FilterBar({ category, destination, onCategoryChange, onDestinati
             {destination && !cities.includes(destination) && !countries.includes(destination) && (
               <option value={destination}>{destination}</option>
             )}
-            <optgroup label="Países">
-              {countries.map((country) => <option key={country} value={country}>{countryLabel(country)}</option>)}
-            </optgroup>
-            <optgroup label="Ciudades">
-              {cities.map((city) => <option key={city} value={city}>{city}</option>)}
-            </optgroup>
+            <DestinationOptions />
           </select>
           <ChevronDown aria-hidden="true" className="select-arrow" size={16} />
         </div>

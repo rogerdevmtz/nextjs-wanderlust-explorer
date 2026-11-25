@@ -1,10 +1,10 @@
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ExperienceGrid } from "@/components/ExperienceGrid";
+import { ExperienceGallery, type ExperiencePhoto } from "@/components/ExperienceGallery";
 import { ExplorerReturnLink, FilteredExplorerReturnLink } from "@/components/ExplorerReturnLink";
 import { SaveExperience } from "@/components/SavedExperiences";
 import { experiences } from "@/data/experiences";
@@ -28,6 +28,16 @@ export default async function ExperiencePage({ params }: Props) {
   const experience = findExperience((await params).id);
   if (!experience) notFound();
   const { id, title, imageUrl, description, destination, category, price, rating } = experience;
+  const place = destinationLabel(destination);
+  const photos: [ExperiencePhoto, ...ExperiencePhoto[]] = [
+    { src: imageUrl, caption: `Imagen ilustrativa de ${place}` },
+  ];
+  if (id === "vela-al-atardecer-por-el-adriatico") {
+    photos.push(
+      { src: "/images/hvar.webp", caption: "Un velero junto al litoral de Hvar" },
+      { src: "/images/costa-dalmata-al-amanecer.webp", caption: "La costa dálmata al amanecer" },
+    );
+  }
   const related: Experience[] = [];
   const shownDestinations = new Set([destination]);
   for (const item of experiences) {
@@ -43,29 +53,27 @@ export default async function ExperiencePage({ params }: Props) {
         <FilteredExplorerReturnLink />
       </Suspense>
       <article className="detail-layout">
-        <div className="detail-panel">
-          <header className="detail-heading">
-            <div className="detail-topline">
-              <span className="detail-category">{categoryLabels[category]}</span>
-              <p className="detail-location"><MapPin aria-hidden="true" size={16} /> {destinationLabel(destination)}</p>
-            </div>
-            <h1>{title}</h1>
-          </header>
-          <div className="detail-content">
+        <header className="detail-heading">
+          <div className="detail-topline">
+            <span className="detail-category">{categoryLabels[category]}</span>
+            <p className="detail-location"><MapPin aria-hidden="true" size={16} /> {place}</p>
+          </div>
+          <h1>{title}</h1>
+        </header>
+        <ExperienceGallery key={id} photos={photos} />
+        <div className="detail-body">
+          <section className="detail-story" aria-labelledby="about-experience">
+            <h2 id="about-experience">Sobre la <em>experiencia</em></h2>
+            <p className="detail-description">{description}</p>
+          </section>
+          <aside className="detail-content" aria-label="Precio, valoración y favoritos">
             <dl className="detail-facts">
               <div><dt>Precio por persona</dt><dd>{priceLabel(price)}</dd></div>
               <div><dt>Valoración</dt><dd><Star aria-hidden="true" size={19} /> {rating.toFixed(1).replace(".", ",")} <small>/ 5</small></dd></div>
             </dl>
             <SaveExperience id={id} title={title} />
-            <p className="detail-description">{description}</p>
-          </div>
+          </aside>
         </div>
-        <figure className="detail-figure">
-          <div className="detail-image">
-            <Image src={imageUrl} alt="" fill sizes="(max-width: 720px) 92vw, (max-width: 1400px) 52vw, 700px" preload />
-          </div>
-          <figcaption>Imagen ilustrativa de {destinationLabel(destination)}</figcaption>
-        </figure>
       </article>
       {related.length > 0 && (
         <section className="related-section" aria-labelledby="related-title">

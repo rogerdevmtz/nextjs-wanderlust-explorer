@@ -1,5 +1,6 @@
 "use client";
 
+import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useFavorites } from "@/components/FavoritesProvider";
@@ -33,10 +34,16 @@ export function Navbar() {
             );
           })}
         </nav>
-        <span className="nav-profile" aria-hidden="true">
-          <span>Alex Moreno</span>
-          <span className="nav-avatar">AM</span>
-        </span>
+        <div className="nav-tools">
+          <Link href="/experiences#experience-search" className="nav-search" aria-label="Buscar experiencias">
+            <Search aria-hidden="true" size={17} />
+            <span>Buscar</span>
+          </Link>
+          <Link href="/profile" className="nav-profile" aria-label="Perfil de Alex Moreno">
+            <span>Alex Moreno</span>
+            <span className="nav-avatar" aria-hidden="true">AM</span>
+          </Link>
+        </div>
       </div>
     </header>
   );

@@ -3,13 +3,8 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { experiences } from "@/data/experiences";
 import { countryLabel, filterKeys, getCatalogFilterQuery } from "@/lib/catalog";
+import { cities, countries } from "@/lib/catalog-options";
 import { categories } from "@/types/experience";
-
-const collator = new Intl.Collator("es");
-const destinations = experiences.map(({ destination }) => destination.split(", "));
-export const cities = [...new Set(destinations.map(([city]) => city))].sort(collator.compare);
-export const countries = [...new Set(destinations.map(([, country]) => country))]
-  .sort((a, b) => collator.compare(countryLabel(a), countryLabel(b)));
 
 type Filters = Partial<Record<(typeof filterKeys)[number], string>>;
 
