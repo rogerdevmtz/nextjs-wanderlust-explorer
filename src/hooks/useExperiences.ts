@@ -8,6 +8,8 @@ import { categories } from "@/types/experience";
 
 type Filters = Partial<Record<(typeof filterKeys)[number], string>>;
 
+export const PAGE_SIZE = 12;
+
 function normalize(value: string) {
   return value.trim().normalize("NFD").replace(/\p{M}/gu, "");
 }
@@ -44,6 +46,7 @@ export function useExperiences() {
       if (value) next.set(key, value);
       else next.delete(key);
     }
+    next.delete("page");
 
     const query = next.toString();
     const url = query ? `${pathname}?${query}` : pathname;
@@ -52,7 +55,25 @@ export function useExperiences() {
     else window.history.pushState(null, "", url);
   }
 
+  const showAll = params.get("page") === "todas";
+  const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+  const page = showAll ? 1 : Math.min(totalPages, Math.max(1, Number.parseInt(params.get("page") ?? "1", 10) || 1));
+  const pageResults = showAll ? results : results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  function goToPage(nextPage: number | "todas") {
+    const next = new URLSearchParams(window.location.search);
+    if (nextPage === "todas" || nextPage > 1) next.set("page", String(nextPage));
+    else next.delete("page");
+    const query = next.toString();
+    window.history.pushState(null, "", query ? `${pathname}?${query}` : pathname);
+  }
+
   return {
+    page,
+    showAll,
+    totalPages,
+    pageResults,
+    goToPage,
     search,
     category: category ? category.toLowerCase() : rawCategory,
     destination,

@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, BookOpen, MapPin } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Globe, Layers, MapPin, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FeaturedRail } from "@/components/FeaturedRail";
@@ -20,25 +20,37 @@ export default function Home() {
   return (
     <div className="home-page">
       <section className="hero">
-        <Image src="/images/costa-dalmata-al-amanecer.webp" alt="" fill sizes="100vw" preload />
+        <div className="hero-media" aria-hidden="true">
+          <picture>
+            <source media="(min-width: 761px)" type="image/webp" sizes="100vw"
+              srcSet="/images/hero-kelingking-1600.webp 1600w, /images/hero-kelingking-2663.webp 2663w" />
+            {/* Se sirve sin recomprimir para conservar la nitidez; cada pantalla recibe su recorte. */}
+            <img src="/images/hero-kelingking-movil.webp" alt="" width={744} height={1328}
+              fetchPriority="high" decoding="async" className="hero-photo" />
+          </picture>
+        </div>
         <div className="hero-shade" aria-hidden="true" />
         <div className="container hero-content">
           <h1>El mundo, una <em>experiencia</em> a la vez.</h1>
           <div className="hero-actions">
-            <p>Descubre experiencias locales y guarda las que te gustaría vivir en tu próximo viaje.</p>
+            <p>Descubre {experiences.length} experiencias curadas en {countries.length} países, desde playas escondidas en Indonesia hasta mercados nocturnos y retiros termales.</p>
             <HomeSearch />
           </div>
-          <div className="hero-meta">
-            <span className="hero-location"><MapPin aria-hidden="true" size={16} /> Costa dálmata, Croacia</span>
-            <span>{experiences.length} experiencias en {countries.length} países</span>
-          </div>
+        </div>
+        <div className="container hero-footer">
+          <p className="hero-place"><MapPin aria-hidden="true" size={15} /> Kelingking · Nusa Penida, Indonesia</p>
+          <a href="#travel-categories" className="hero-scroll">Desliza para descubrir <ArrowDown aria-hidden="true" size={16} /></a>
+          <p className="hero-count"><strong>{experiences.length}</strong> experiencias · <strong>{countries.length}</strong> países</p>
         </div>
       </section>
 
       <section className="container discovery-section" aria-labelledby="travel-categories">
         <div className="editorial-heading">
-          <h2 id="travel-categories">Explora <em>por categoría</em></h2>
-          <p>Elige qué te apetece hacer y descubre las experiencias de esa categoría.</p>
+          <div>
+            <p className="eyebrow">01 / Colecciones</p>
+            <h2 id="travel-categories">Explora <em>por categoría</em></h2>
+          </div>
+          <p>Cinco formas distintas de conectar con cada destino. Elige qué te apetece hacer y descubre sus experiencias.</p>
         </div>
         <ul className="category-links">
           {categories.map((category) => {
@@ -49,8 +61,8 @@ export default function Home() {
                   <Image src={feature.image} alt="" fill sizes="(max-width: 640px) 92vw, 54vw" />
                   <span className="category-tag">{categoryLabels[category]}</span>
                   <span className="category-copy">
-                    <strong>{feature.title}</strong>
-                    <span>{feature.description}</span>
+                    <strong>{categoryLabels[category]}</strong>
+                    <span>{experiences.filter((item) => item.category === category).length} experiencias activas</span>
                   </span>
                   <span className="category-arrow"><ArrowUpRight aria-hidden="true" size={17} /></span>
                 </Link>
@@ -63,25 +75,29 @@ export default function Home() {
       <section className="featured-section" aria-labelledby="featured-title">
         <div className="container">
           <div className="section-heading">
-            <h2 id="featured-title">Experiencias <em>destacadas</em></h2>
-            <Link href="/experiences" className="text-button">Ver las {experiences.length} experiencias <ArrowRight aria-hidden="true" size={17} /></Link>
+            <div>
+              <p className="eyebrow">02 / Selección editorial</p>
+              <h2 id="featured-title">Experiencias <em>destacadas</em></h2>
+            </div>
           </div>
-          <FeaturedRail experiences={experiences.slice(0, 6)} />
+          <FeaturedRail experiences={experiences.slice(0, 6)}
+            action={<Link href="/experiences" className="button button-small">Ver todas <ArrowRight aria-hidden="true" size={16} /></Link>} />
         </div>
       </section>
       <section className="journal-panel" aria-labelledby="journal-title">
-        <Image src="/images/adriatico.webp" alt="" fill sizes="100vw" />
+        <Image src="/images/kelingking-playa.webp" alt="" fill sizes="100vw" />
         <div className="container journal-inner">
           <div className="journal-copy">
+            <p className="eyebrow">03 / Tu diario personal</p>
             <h2 id="journal-title">Tu <em>bitácora de viaje</em></h2>
-            <p>Guarda las experiencias que te interesan y vuelve a ellas durante esta visita.</p>
-            <Link href="/favorites" className="button">Ver mis favoritos <ArrowRight aria-hidden="true" size={17} /></Link>
+            <p>Guarda tus experiencias favoritas y lleva un registro visual de los países y categorías que definen tu estilo de viaje.</p>
+            <Link href="/profile" className="button button-light">Ver mi perfil <ArrowRight aria-hidden="true" size={17} /></Link>
           </div>
-          <Link href="/profile" className="journal-link">
-            <span className="empty-icon"><BookOpen aria-hidden="true" size={21} /></span>
-            <span><strong>Mi perfil y bitácora</strong><span>Consulta tus experiencias guardadas.</span></span>
-            <ArrowUpRight aria-hidden="true" size={18} />
-          </Link>
+          <ul className="journal-stats" aria-label="El catálogo en cifras">
+            <li><Sparkles aria-hidden="true" size={20} /><strong>{experiences.length}</strong><span>Experiencias curadas</span></li>
+            <li><Globe aria-hidden="true" size={20} /><strong>{countries.length}</strong><span>Países por explorar</span></li>
+            <li><Layers aria-hidden="true" size={20} /><strong>{categories.length}</strong><span>Categorías únicas</span></li>
+          </ul>
         </div>
       </section>
     </div>

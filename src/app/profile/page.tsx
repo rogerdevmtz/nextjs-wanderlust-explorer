@@ -1,30 +1,30 @@
-import { ArrowRight, Heart, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { FavoritesCount, FavoritesPreview } from "@/components/SavedExperiences";
+import { PageHero } from "@/components/PageHero";
+import { FavoritesPreview, ProfileStats } from "@/components/SavedExperiences";
 
 export const metadata: Metadata = { title: "Perfil" };
 
 export default function ProfilePage() {
   return (
-    <div className="container inner-page">
-      <header className="page-heading profile-heading">
-        <h1>Mi perfil <em>y bitácora</em></h1>
-        <p>Perfil de demostración</p>
-      </header>
-      <div className="profile-grid">
-        <section className="profile-panel profile-person" aria-label="Datos del perfil">
-          <span className="profile-avatar" aria-hidden="true">AM</span>
-          <div><h2>Alex Moreno</h2><p><MapPin aria-hidden="true" size={16} /> Madrid, España</p></div>
-        </section>
-        <section className="profile-panel profile-summary">
-          <span className="empty-icon"><Heart aria-hidden="true" size={20} /></span>
-          <h2>Favoritos guardados</h2>
-          <FavoritesCount />
-          <Link href="/favorites" className="text-button">Ver favoritos <ArrowRight aria-hidden="true" size={17} /></Link>
-        </section>
+    <div className="catalog-page">
+      <PageHero eyebrow="Perfil de demostración" title={<>Mi perfil <em>y bitácora</em></>}
+        description="Tu resumen de viaje con las experiencias que has guardado en esta visita."
+        image="/images/patagonia.webp" imagePosition="center 45%" />
+      <div className="container catalog-body">
+        <div className="profile-grid">
+          <section className="profile-person" aria-label="Datos del perfil">
+            <span className="profile-avatar" aria-hidden="true">AM</span>
+            <div>
+              <p className="eyebrow">Explorador</p>
+              <h2>Alex Moreno</h2>
+              <p className="profile-place"><MapPin aria-hidden="true" size={16} /> Madrid, España</p>
+            </div>
+          </section>
+          <ProfileStats />
+        </div>
+        <FavoritesPreview />
       </div>
-      <FavoritesPreview />
     </div>
   );
 }

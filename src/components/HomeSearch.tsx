@@ -1,8 +1,8 @@
 import { ArrowRight, MapPin, Search, Shapes } from "lucide-react";
 import Form from "next/form";
-import { DestinationOptions } from "@/components/DestinationOptions";
-import { categoryLabels } from "@/lib/catalog";
-import { categories } from "@/types/experience";
+import { destinationGroups } from "@/components/DestinationOptions";
+import { categoryGroups } from "@/components/FilterBar";
+import { Select } from "@/components/Select";
 
 export function HomeSearch() {
   return (
@@ -14,29 +14,21 @@ export function HomeSearch() {
           <input type="search" name="search" placeholder="Vela, templos, cocina…" />
         </span>
       </label>
-      <label className="hero-field">
+      <div className="hero-field">
         <MapPin aria-hidden="true" size={18} />
         <span>
-          <span className="hero-field-label">Destino</span>
-          <select name="destination">
-            <option value="">Todos</option>
-            <DestinationOptions />
-          </select>
+          <span className="hero-field-label" id="home-destination-label">Destino</span>
+          <Select name="destination" label="Destino" groups={destinationGroups("Todos los destinos")} />
         </span>
-      </label>
-      <label className="hero-field">
+      </div>
+      <div className="hero-field">
         <Shapes aria-hidden="true" size={18} />
         <span>
           <span className="hero-field-label">Categoría</span>
-          <select name="category">
-            <option value="">Todas</option>
-            {categories.map((category) => (
-              <option key={category} value={category.toLowerCase()}>{categoryLabels[category]}</option>
-            ))}
-          </select>
+          <Select name="category" label="Categoría" groups={categoryGroups("Todas")} />
         </span>
-      </label>
-      <button className="button" type="submit">Explorar experiencias <ArrowRight aria-hidden="true" size={17} /></button>
+      </div>
+      <button className="button" type="submit">Explorar <ArrowRight aria-hidden="true" size={17} /></button>
     </Form>
   );
 }

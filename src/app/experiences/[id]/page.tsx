@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin, Star } from "lucide-react";
+import { ArrowRight, BadgeCheck, Globe, Heart, MapPin, Star, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -29,6 +29,10 @@ export default async function ExperiencePage({ params }: Props) {
   if (!experience) notFound();
   const { id, title, imageUrl, description, destination, category, price, rating } = experience;
   const place = destinationLabel(destination);
+  const [city, country] = place.split(", ");
+  const words = title.split(" ");
+  const accent = words.pop();
+  const ratingLabel = rating.toFixed(1).replace(".", ",");
   const photos: [ExperiencePhoto, ...ExperiencePhoto[]] = [
     { src: imageUrl, caption: `Imagen ilustrativa de ${place}` },
   ];
@@ -54,33 +58,66 @@ export default async function ExperiencePage({ params }: Props) {
       </Suspense>
       <article className="detail-layout">
         <header className="detail-heading">
+          <nav className="breadcrumb" aria-label="Ruta de navegación">
+            <Link href="/">Inicio</Link>
+            <span aria-hidden="true">/</span>
+            <Link href="/experiences">Explorar</Link>
+            <span aria-hidden="true">/</span>
+            <Link href={`/experiences?category=${category.toLowerCase()}`}>{categoryLabels[category]}</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">{title}</span>
+          </nav>
           <div className="detail-topline">
             <span className="detail-category">{categoryLabels[category]}</span>
             <p className="detail-location"><MapPin aria-hidden="true" size={16} /> {place}</p>
+            <span className="detail-rating"><Star aria-hidden="true" size={15} /> <strong>{ratingLabel}</strong> / 5</span>
           </div>
-          <h1>{title}</h1>
+          <h1>{words.join(" ")} <em>{accent}</em></h1>
         </header>
         <ExperienceGallery key={id} photos={photos} />
+        <dl className="key-facts">
+          <div><span className="stat-icon"><Tag aria-hidden="true" size={19} /></span><dt>Categoría</dt><dd>{categoryLabels[category]}</dd></div>
+          <div><span className="stat-icon"><MapPin aria-hidden="true" size={19} /></span><dt>Ciudad</dt><dd>{city}</dd></div>
+          <div><span className="stat-icon"><Star aria-hidden="true" size={19} /></span><dt>Valoración</dt><dd>{ratingLabel} / 5</dd></div>
+          <div><span className="stat-icon"><Globe aria-hidden="true" size={19} /></span><dt>País</dt><dd>{country}</dd></div>
+        </dl>
         <div className="detail-body">
-          <section className="detail-story" aria-labelledby="about-experience">
-            <h2 id="about-experience">Sobre la <em>experiencia</em></h2>
-            <p className="detail-description">{description}</p>
-          </section>
+          <div className="detail-main">
+
+            <section className="detail-story" aria-labelledby="about-experience">
+              <p className="eyebrow">01 / Descripción</p>
+              <h2 id="about-experience">Sobre la <em>experiencia</em></h2>
+              <p className="detail-description">{description}</p>
+            </section>
+          </div>
           <aside className="detail-content" aria-label="Precio, valoración y favoritos">
-            <dl className="detail-facts">
-              <div><dt>Precio por persona</dt><dd>{priceLabel(price)}</dd></div>
-              <div><dt>Valoración</dt><dd><Star aria-hidden="true" size={19} /> {rating.toFixed(1).replace(".", ",")} <small>/ 5</small></dd></div>
-            </dl>
+            <div className="detail-price">
+              <div>
+                <span className="eyebrow">Precio por persona</span>
+                <p><strong>{priceLabel(price)}</strong> <small>/ persona</small></p>
+              </div>
+              <div className="detail-price-rating">
+                <span className="eyebrow">Valoración</span>
+                <p><Star aria-hidden="true" size={18} /> <strong>{ratingLabel}</strong> <small>/ 5</small></p>
+              </div>
+            </div>
             <SaveExperience id={id} title={title} />
+            <ul className="detail-assurances">
+              <li><Heart aria-hidden="true" size={16} /> Se guarda en tus favoritos durante la visita</li>
+              <li><BadgeCheck aria-hidden="true" size={16} /> Datos y precios de demostración</li>
+            </ul>
           </aside>
         </div>
       </article>
       {related.length > 0 && (
         <section className="related-section" aria-labelledby="related-title">
           <div className="section-heading">
-            <h2 id="related-title">Más de <em>{categoryLabels[category].toLowerCase()}</em></h2>
+            <div>
+              <p className="eyebrow">Explora más</p>
+              <h2 id="related-title">También te puede <em>interesar</em></h2>
+            </div>
             <Link href={`/experiences?category=${category.toLowerCase()}`} className="text-button">
-              Explorar la categoría <ArrowRight aria-hidden="true" size={17} />
+              Ver más de {categoryLabels[category].toLowerCase()} <ArrowRight aria-hidden="true" size={17} />
             </Link>
           </div>
           <ExperienceGrid experiences={related} />

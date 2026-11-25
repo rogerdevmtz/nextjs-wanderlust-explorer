@@ -1,5 +1,6 @@
 "use client";
 
+import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -18,8 +19,9 @@ export function ExperienceGallery({ photos }: { photos: readonly [ExperiencePhot
             sizes={photos.length > 1 ? "(max-width: 720px) 92vw, (max-width: 1400px) 68vw, 900px" : "(max-width: 1375px) 92vw, 1280px"}
             preload={index === 0}
             loading={index === 0 ? undefined : "eager"} />
+          <figcaption aria-live="polite">{photo.caption}</figcaption>
+          <span className="gallery-counter" aria-hidden="true"><Camera size={14} /> {index + 1} / {photos.length}</span>
         </div>
-        <figcaption aria-live="polite">{photo.caption}</figcaption>
       </figure>
       {photos.length > 1 && (
         <div className="gallery-thumbs" role="group" aria-label="Elegir fotografía">

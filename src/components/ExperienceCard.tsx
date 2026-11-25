@@ -48,7 +48,8 @@ export const ExperienceCard = memo(function ExperienceCard({ experience, saved, 
         <p className="card-description">{description}</p>
         <div className="card-meta">
           <span className="card-price"><strong>{priceLabel(price)}</strong> <span>/ persona</span></span>
-          <ArrowUpRight aria-hidden="true" className="card-arrow" size={18} />
+          <span className="card-arrow" aria-hidden="true"><ArrowUpRight size={18} /></span>
+          <span className="card-cta" aria-hidden="true">Ver experiencia <ArrowUpRight size={16} /></span>
         </div>
       </div>
     </article>

@@ -1,16 +1,16 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { Compass, Heart, House, Search, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useFavorites } from "@/components/FavoritesProvider";
 import { SiteBrand } from "@/components/SiteBrand";
 
 const links = [
-  { href: "/", label: "Inicio" },
-  { href: "/experiences", label: "Explorar" },
-  { href: "/favorites", label: "Favoritos" },
-  { href: "/profile", label: "Perfil" },
+  { href: "/", label: "Inicio", Icon: House },
+  { href: "/experiences", label: "Explorar", Icon: Compass },
+  { href: "/favorites", label: "Favoritos", Icon: Heart },
+  { href: "/profile", label: "Perfil", Icon: UserRound },
 ];
 
 export function Navbar() {
@@ -22,11 +22,12 @@ export function Navbar() {
       <div className="container nav-inner">
         <SiteBrand />
         <nav className="site-nav" aria-label="Navegación principal">
-          {links.map(({ href, label }) => {
+          {links.map(({ href, label, Icon }) => {
             const active = pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
             return (
               <Link key={href} href={href} className={active ? "nav-active" : undefined} aria-current={pathname === href ? "page" : active ? "location" : undefined}>
-                <span>{label}</span>
+                <Icon className="nav-icon" aria-hidden="true" size={18} />
+                <span className="nav-label">{label}</span>
                 {href === "/favorites" && ids.size > 0 && (
                   <span className="nav-count" aria-hidden="true">{ids.size}</span>
                 )}
@@ -34,6 +35,7 @@ export function Navbar() {
             );
           })}
         </nav>
+        <span className="nav-progress" aria-hidden="true" />
         <div className="nav-tools">
           <Link href="/experiences#experience-search" className="nav-search" aria-label="Buscar experiencias">
             <Search aria-hidden="true" size={17} />
