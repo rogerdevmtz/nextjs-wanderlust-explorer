@@ -36,7 +36,9 @@ Los favoritos se guardan en el `useState` del proveedor del layout, se comparten
 - [GetYourGuide](https://www.getyourguide.com/) inspiró la navegación por categorías y la organización de un catálogo con accesos directos.
 - [Viator](https://www.viator.com/) inspiró la jerarquía de las tarjetas, con destino, valoración y precio fáciles de comparar.
 
-La interfaz usa una paleta de verdes y crema, tipografía editorial y fotografías ilustrativas de los destinos. El dataset está tipado en `src/data/experiences.ts` y se generó con asistencia de IA. Los precios, las valoraciones y el perfil son ficticios. Las imágenes locales de `public/images` se generaron con ImageGen a partir de dos indicaciones: una panorámica editorial de la costa dálmata y una cuadrícula de fotografías editoriales de destinos. Se sirven en WebP.
+Las maquetas de Wanderlust Explorer en Stitch guiaron la paleta marítima, el uso de Newsreader y Manrope y la composición de la portada, las fichas y la bitácora.
+
+El dataset está tipado en `src/data/experiences.ts` y se generó con asistencia de IA. Los precios, las valoraciones y el perfil son ficticios. Las fotografías ilustrativas de `public/images` se generaron con ImageGen y se sirven en WebP.
 
 ## Comprobación rápida
 

@@ -28,3 +28,16 @@ export function FavoritesCount() {
   const { ids } = useFavorites();
   return <strong className="profile-count">{ids.size}</strong>;
 }
+
+export function FavoritesPreview() {
+  const { ids } = useFavorites();
+  const saved = experiences.filter(({ id }) => ids.has(id)).slice(0, 3);
+  if (!saved.length) return null;
+
+  return (
+    <section className="profile-collection" aria-labelledby="profile-collection-title">
+      <h2 id="profile-collection-title">En tu <em>bitácora</em></h2>
+      <ExperienceGrid experiences={saved} />
+    </section>
+  );
+}

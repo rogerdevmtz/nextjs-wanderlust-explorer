@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
+import { SiteBrand } from "@/components/SiteBrand";
 import { FavoritesProvider } from "@/components/FavoritesProvider";
 import "@fontsource-variable/manrope";
-import "@fontsource-variable/fraunces";
+import "@fontsource-variable/newsreader";
+import "@fontsource-variable/newsreader/wght-italic.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -21,7 +24,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main id="main-content" tabIndex={-1}>{children}</main>
         </FavoritesProvider>
         <footer className="site-footer">
-          <div className="container"><strong>Wanderlust Explorer</strong><span>Proyecto de demostración · Wanderlust Labs</span></div>
+          <div className="container">
+            <div className="footer-row">
+              <SiteBrand />
+              <nav aria-label="Navegación del pie">
+                <Link href="/">Inicio</Link>
+                <Link href="/experiences">Explorar</Link>
+                <Link href="/favorites">Favoritos</Link>
+                <Link href="/profile">Perfil</Link>
+              </nav>
+            </div>
+            <p>Proyecto de demostración · Wanderlust Labs</p>
+          </div>
         </footer>
       </body>
     </html>

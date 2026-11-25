@@ -29,23 +29,29 @@ export default async function ExperiencePage({ params }: Props) {
     <div className="container inner-page">
       <Link href="/experiences" className="text-button back-link"><ArrowLeft aria-hidden="true" size={17} /> Volver al explorador</Link>
       <article className="detail-layout">
+        <div className="detail-panel">
+          <header className="detail-heading">
+            <div className="detail-topline">
+              <span className="detail-category">{categoryLabels[category]}</span>
+              <p className="detail-location"><MapPin aria-hidden="true" size={16} /> {destinationLabel(destination)}</p>
+            </div>
+            <h1>{title}</h1>
+          </header>
+          <div className="detail-content">
+            <dl className="detail-facts">
+              <div><dt>Precio por persona</dt><dd>{priceLabel(price)}</dd></div>
+              <div><dt>Valoración</dt><dd><Star aria-hidden="true" size={19} /> {rating.toFixed(1).replace(".", ",")} <small>/ 5</small></dd></div>
+            </dl>
+            <SaveExperience id={id} title={title} />
+            <p className="detail-description">{description}</p>
+          </div>
+        </div>
         <figure className="detail-figure">
           <div className="detail-image">
-            <Image src={imageUrl} alt="" fill sizes="(max-width: 850px) 92vw, 48vw" preload />
+            <Image src={imageUrl} alt="" fill sizes="(max-width: 720px) 92vw, (max-width: 1400px) 52vw, 700px" preload />
           </div>
           <figcaption>Imagen ilustrativa de {destinationLabel(destination)}</figcaption>
         </figure>
-        <div className="detail-content">
-          <span className="detail-category">{categoryLabels[category]}</span>
-          <h1>{title}</h1>
-          <p className="detail-location"><MapPin aria-hidden="true" size={17} /> {destinationLabel(destination)}</p>
-          <p className="detail-description">{description}</p>
-          <dl className="detail-facts">
-            <div><dt>Precio por persona</dt><dd>{priceLabel(price)}</dd></div>
-            <div><dt>Valoración</dt><dd><Star aria-hidden="true" size={20} /> {rating.toFixed(1).replace(".", ",")} <small>/ 5</small></dd></div>
-          </dl>
-          <SaveExperience id={id} title={title} />
-        </div>
       </article>
     </div>
   );

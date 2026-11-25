@@ -9,7 +9,7 @@ export const experiences: readonly Experience[] = [
     destination: "Hvar, Croatia",
     price: 25,
     rating: 4.5,
-    imageUrl: "/images/hvar.webp",
+    imageUrl: "/images/hvar-vela.webp",
   },
   {
     id: "los-templos-de-higashiyama",
