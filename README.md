@@ -100,7 +100,6 @@ El archivo `src/data/experiences.ts` contiene 100 experiencias generadas con asi
 
 - [GetYourGuide](https://www.getyourguide.com/): navegación por categorías y catálogo con accesos directos.
 - [Viator](https://www.viator.com/): jerarquía de las tarjetas, con destino, valoración y precio fáciles de comparar.
-- [Ocean Crest](https://ocean-crest.webflow.io/): ritmo editorial entre fotografías panorámicas, composiciones y selección horizontal.
 
 ## Autor
 
