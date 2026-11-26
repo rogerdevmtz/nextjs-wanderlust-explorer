@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FeaturedRail } from "@/components/FeaturedRail";
@@ -38,7 +38,6 @@ export default function Home() {
           </div>
         </div>
         <div className="container hero-footer">
-          <p className="hero-place"><MapPin aria-hidden="true" size={15} /> Kelingking · Nusa Penida, Indonesia</p>
           <a href="#travel-categories" className="hero-scroll">Desliza para descubrir <ArrowDown aria-hidden="true" size={16} /></a>
         </div>
       </section>
