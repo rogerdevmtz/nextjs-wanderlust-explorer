@@ -12,6 +12,7 @@ Explorador de experiencias de viaje desarrollado con Next.js (App Router), React
 - **Estado en la URL**: `search`, `category` y `destination` se sincronizan con `useSearchParams` y `usePathname`. Un enlace prefiltrado restaura los controles y los resultados.
 - **Favoritos** gestionados con `useState` en un proveedor compartido y pasados a cada tarjeta mediante props. Se reflejan en Favoritos y en el contador del Perfil.
 - **Paginación** de 12 en 12 con opción de ver las 100 experiencias a la vez.
+- **Experiencia móvil cuidada**: barra de navegación inferior con la sección activa y el contador de favoritos, avisos al guardar o quitar un favorito y desplegables propios accesibles con teclado.
 - **Diseño responsive** para móvil, tablet y escritorio, con soporte de teclado y de la preferencia de movimiento reducido.
 
 ## Capturas

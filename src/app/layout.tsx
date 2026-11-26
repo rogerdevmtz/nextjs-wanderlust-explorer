@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { Navbar } from "@/components/Navbar";
 import { ScrollEffects } from "@/components/ScrollEffects";
 import { SiteFooter } from "@/components/SiteFooter";
+import { FavoriteToast } from "@/components/FavoriteToast";
 import { FavoritesProvider } from "@/components/FavoritesProvider";
 import "@fontsource-variable/newsreader";
 import "@fontsource-variable/newsreader/wght-italic.css";
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <FavoritesProvider>
           <Navbar />
           <main id="main-content" tabIndex={-1}>{children}</main>
+          <FavoriteToast />
         </FavoritesProvider>
         <SiteFooter />
         <ScrollEffects />

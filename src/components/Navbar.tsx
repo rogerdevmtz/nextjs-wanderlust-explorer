@@ -17,13 +17,16 @@ export function Navbar() {
   const pathname = usePathname();
   const { ids } = useFavorites();
 
+  const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+
   return (
+    <>
     <header className="site-header">
       <div className="container nav-inner">
         <SiteBrand />
         <nav className="site-nav" aria-label="Navegación principal">
           {links.map(({ href, label, Icon }) => {
-            const active = pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+            const active = isActive(href);
             return (
               <Link key={href} href={href} className={active ? "nav-active" : undefined} aria-current={pathname === href ? "page" : active ? "location" : undefined}>
                 <Icon className="nav-icon" aria-hidden="true" size={18} />
@@ -48,5 +51,20 @@ export function Navbar() {
         </div>
       </div>
     </header>
+    <nav className="tab-bar" aria-label="Navegación principal en móvil">
+      {links.map(({ href, label, Icon }) => {
+        const active = isActive(href);
+        return (
+          <Link key={href} href={href} className={active ? "tab-active" : undefined} aria-current={pathname === href ? "page" : active ? "location" : undefined}>
+            <span className="tab-icon">
+              <Icon aria-hidden="true" size={20} />
+              {href === "/favorites" && ids.size > 0 && <span className="tab-count" aria-label={`${ids.size} guardadas`}>{ids.size}</span>}
+            </span>
+            <span>{label}</span>
+          </Link>
+        );
+      })}
+    </nav>
+    </>
   );
 }
