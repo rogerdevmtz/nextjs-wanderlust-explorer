@@ -4,11 +4,28 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { experiences } from "@/data/experiences";
 import { countryLabel, filterKeys, getCatalogFilterQuery } from "@/lib/catalog";
 import { cities, countries } from "@/lib/catalog-options";
-import { categories } from "@/types/experience";
+import { categories, type Experience } from "@/types/experience";
 
 type Filters = Partial<Record<(typeof filterKeys)[number], string>>;
 
 export const PAGE_SIZE = 12;
+
+export const sortOptions = [
+  { value: "", label: "Recomendadas" },
+  { value: "precio-asc", label: "Precio: de menor a mayor" },
+  { value: "precio-desc", label: "Precio: de mayor a menor" },
+  { value: "valoracion", label: "Mejor valoradas" },
+] as const;
+
+type SortKey = (typeof sortOptions)[number]["value"];
+
+const sorters: Record<Exclude<SortKey, "">, (a: Experience, b: Experience) => number> = {
+  "precio-asc": (a, b) => a.price - b.price,
+  "precio-desc": (a, b) => b.price - a.price,
+  valoracion: (a, b) => b.rating - a.rating,
+};
+
+const isSortKey = (value: string): value is SortKey => sortOptions.some((option) => option.value === value);
 
 function normalize(value: string) {
   return value.trim().normalize("NFD").replace(/\p{M}/gu, "");
@@ -46,7 +63,9 @@ export function useExperiences() {
       if (value) next.set(key, value);
       else next.delete(key);
     }
-    next.delete("page");
+    // Si se navegaba por páginas, el cambio de filtros vuelve a la primera.
+    if (next.has("page") && next.get("page") !== "todas") next.set("page", "1");
+    else next.delete("page");
 
     const query = next.toString();
     const url = query ? `${pathname}?${query}` : pathname;
@@ -55,18 +74,26 @@ export function useExperiences() {
     else window.history.pushState(null, "", url);
   }
 
-  const showAll = params.get("page") === "todas";
-  const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
-  const page = showAll ? 1 : Math.min(totalPages, Math.max(1, Number.parseInt(params.get("page") ?? "1", 10) || 1));
-  const pageResults = showAll ? results : results.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  // Estado inicial: todas las experiencias. La paginación es opcional (?page=N).
+  const rawSort = params.get("sort") ?? "";
+  const sort: SortKey = isSortKey(rawSort) ? rawSort : "";
+  const sorted = sort ? [...results].sort(sorters[sort]) : results;
+  const rawPage = params.get("page");
+  const showAll = !rawPage || rawPage === "todas";
+  const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
+  const page = showAll ? 1 : Math.min(totalPages, Math.max(1, Number.parseInt(rawPage, 10) || 1));
+  const pageResults = showAll ? sorted : sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  function goToPage(nextPage: number | "todas") {
+  function pushParam(key: string, value: string) {
     const next = new URLSearchParams(window.location.search);
-    if (nextPage === "todas" || nextPage > 1) next.set("page", String(nextPage));
-    else next.delete("page");
+    if (value) next.set(key, value);
+    else next.delete(key);
     const query = next.toString();
     window.history.pushState(null, "", query ? `${pathname}?${query}` : pathname);
   }
+
+  const goToPage = (nextPage: number | "todas") => pushParam("page", nextPage === "todas" ? "" : String(nextPage));
+  const changeSort = (value: string) => pushParam("sort", isSortKey(value) ? value : "");
 
   return {
     page,
@@ -74,6 +101,8 @@ export function useExperiences() {
     totalPages,
     pageResults,
     goToPage,
+    sort,
+    changeSort,
     search,
     category: category ? category.toLowerCase() : rawCategory,
     destination,

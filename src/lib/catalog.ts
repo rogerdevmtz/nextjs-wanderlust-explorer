@@ -4,7 +4,7 @@ export const filterKeys = ["search", "category", "destination"] as const;
 
 export function getCatalogFilterQuery(params: Pick<URLSearchParams, "get">) {
   const filters = new URLSearchParams();
-  for (const key of [...filterKeys, "page"]) {
+  for (const key of [...filterKeys, "sort", "page"]) {
     const value = params.get(key);
     if (value) filters.set(key, value);
   }

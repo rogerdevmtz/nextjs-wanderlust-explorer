@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 
-type Notice = { key: number; added: boolean };
+type Notice = { key: number; id: string; added: boolean };
 
 type Favorites = {
   ids: ReadonlySet<string>;
@@ -22,7 +22,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       const added = !next.has(id);
       if (added) next.add(id);
       else next.delete(id);
-      setNotice({ key: Date.now(), added });
+      setNotice({ key: Date.now(), id, added });
       return next;
     });
   }, []);

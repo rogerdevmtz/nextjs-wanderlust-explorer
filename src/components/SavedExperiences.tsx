@@ -61,7 +61,7 @@ export function ProfileStats() {
     { icon: <Globe aria-hidden="true" size={19} />, label: "Países", value: countries },
   ];
   return (
-    <section className="profile-stats" aria-label="Resumen de favoritos">
+    <section className={saved.length ? "profile-stats" : "profile-stats profile-stats-empty"} aria-label="Resumen de favoritos">
       <dl>
         {stats.map(({ icon, label, value }) => (
           <div key={label}>
@@ -73,7 +73,9 @@ export function ProfileStats() {
       </dl>
       <div className="profile-stats-footer">
         <span>{saved.length ? <>Presupuesto orientativo: <strong>{priceLabel(total)}</strong> por persona</> : "Guarda experiencias para ver tu resumen."}</span>
-        <Link href="/favorites" className="text-button">Ver favoritos <ArrowRight aria-hidden="true" size={17} /></Link>
+        {saved.length
+          ? <Link href="/favorites" className="text-button">Ver favoritos <ArrowRight aria-hidden="true" size={17} /></Link>
+          : <Link href="/experiences" className="button button-small">Explorar experiencias <ArrowRight aria-hidden="true" size={16} /></Link>}
       </div>
     </section>
   );

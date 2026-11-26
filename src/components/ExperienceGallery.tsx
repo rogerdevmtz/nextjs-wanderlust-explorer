@@ -4,7 +4,7 @@ import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-export type ExperiencePhoto = { src: string; caption: string };
+export type ExperiencePhoto = { src: string; caption: string; alt?: string };
 
 export function ExperienceGallery({ photos }: { photos: readonly [ExperiencePhoto, ...ExperiencePhoto[]] }) {
   const [index, setIndex] = useState(0);
@@ -15,7 +15,7 @@ export function ExperienceGallery({ photos }: { photos: readonly [ExperiencePhot
       aria-label="Fotografías de la experiencia">
       <figure className="detail-figure">
         <div id="experience-photo" className="detail-image">
-          <Image src={photo.src} alt="" fill
+          <Image src={photo.src} alt={photo.alt ?? photo.caption} fill
             sizes={photos.length > 1 ? "(max-width: 720px) 92vw, (max-width: 1400px) 68vw, 900px" : "(max-width: 1375px) 92vw, 1280px"}
             preload={index === 0}
             loading={index === 0 ? undefined : "eager"} />

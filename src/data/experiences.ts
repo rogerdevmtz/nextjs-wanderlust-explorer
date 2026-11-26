@@ -119,7 +119,7 @@ export const experiences: readonly Experience[] = [
     destination: "Hvar, Croatia",
     price: 63,
     rating: 4.7,
-    imageUrl: "/images/hvar.webp",
+    imageUrl: "/images/costa-dalmata-al-amanecer.webp",
   },
   {
     id: "historias-del-puerto-de-hvar",
@@ -139,7 +139,7 @@ export const experiences: readonly Experience[] = [
     destination: "Hvar, Croatia",
     price: 101,
     rating: 4.9,
-    imageUrl: "/images/hvar.webp",
+    imageUrl: "/images/costa-dalmata-al-amanecer.webp",
   },
   {
     id: "pescado-al-estilo-de-la-isla",
@@ -159,7 +159,7 @@ export const experiences: readonly Experience[] = [
     destination: "Hvar, Croatia",
     price: 139,
     rating: 4.5,
-    imageUrl: "/images/hvar.webp",
+    imageUrl: "/images/costa-dalmata-al-amanecer.webp",
   },
   {
     id: "respiracion-entre-olivares",
@@ -169,7 +169,7 @@ export const experiences: readonly Experience[] = [
     destination: "Hvar, Croatia",
     price: 158,
     rating: 4.6,
-    imageUrl: "/images/hvar.webp",
+    imageUrl: "/images/costa-dalmata-al-amanecer.webp",
   },
   {
     id: "sendero-entre-campos-de-lavanda",
@@ -179,7 +179,7 @@ export const experiences: readonly Experience[] = [
     destination: "Hvar, Croatia",
     price: 42,
     rating: 4.7,
-    imageUrl: "/images/hvar.webp",
+    imageUrl: "/images/costa-dalmata-al-amanecer.webp",
   },
   {
     id: "calas-de-la-costa-sur",
@@ -379,7 +379,7 @@ export const experiences: readonly Experience[] = [
     destination: "El Chaltén, Argentina",
     price: 118,
     rating: 4.8,
-    imageUrl: "/images/patagonia.webp",
+    imageUrl: "/images/fitz-roy-al-amanecer.webp",
   },
   {
     id: "bicicleta-al-lago-del-desierto",
@@ -439,7 +439,7 @@ export const experiences: readonly Experience[] = [
     destination: "El Chaltén, Argentina",
     price: 97,
     rating: 4.8,
-    imageUrl: "/images/patagonia.webp",
+    imageUrl: "/images/fitz-roy-al-amanecer.webp",
   },
   {
     id: "bano-de-bosque-en-el-valle",
@@ -449,7 +449,7 @@ export const experiences: readonly Experience[] = [
     destination: "El Chaltén, Argentina",
     price: 116,
     rating: 4.9,
-    imageUrl: "/images/patagonia.webp",
+    imageUrl: "/images/fitz-roy-al-amanecer.webp",
   },
   {
     id: "observacion-de-condores-en-el-valle",
@@ -459,7 +459,7 @@ export const experiences: readonly Experience[] = [
     destination: "El Chaltén, Argentina",
     price: 154,
     rating: 4.5,
-    imageUrl: "/images/patagonia.webp",
+    imageUrl: "/images/fitz-roy-al-amanecer.webp",
   },
   {
     id: "ruta-en-bici-por-el-palmeral",
@@ -799,7 +799,7 @@ export const experiences: readonly Experience[] = [
     destination: "Ubud, Indonesia",
     price: 105,
     rating: 4.9,
-    imageUrl: "/images/bali.webp",
+    imageUrl: "/images/bienestar-ubud.webp",
   },
   {
     id: "terrazas-de-arroz-de-tegallalang",

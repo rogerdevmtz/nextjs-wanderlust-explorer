@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowRight, ArrowUpRight, Globe, Layers, MapPin, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FeaturedRail } from "@/components/FeaturedRail";
@@ -40,14 +40,13 @@ export default function Home() {
         <div className="container hero-footer">
           <p className="hero-place"><MapPin aria-hidden="true" size={15} /> Kelingking · Nusa Penida, Indonesia</p>
           <a href="#travel-categories" className="hero-scroll">Desliza para descubrir <ArrowDown aria-hidden="true" size={16} /></a>
-          <p className="hero-count"><strong>{experiences.length}</strong> experiencias · <strong>{countries.length}</strong> países</p>
         </div>
       </section>
 
       <section className="container discovery-section" aria-labelledby="travel-categories">
         <div className="editorial-heading">
           <div>
-            <p className="eyebrow">01 / Colecciones</p>
+            <p className="eyebrow">Colecciones</p>
             <h2 id="travel-categories">Explora <em>por categoría</em></h2>
           </div>
           <p>Cinco formas distintas de conectar con cada destino. Elige qué te apetece hacer y descubre sus experiencias.</p>
@@ -62,7 +61,7 @@ export default function Home() {
                   <span className="category-tag">{categoryLabels[category]}</span>
                   <span className="category-copy">
                     <strong>{categoryLabels[category]}</strong>
-                    <span>{experiences.filter((item) => item.category === category).length} experiencias activas</span>
+                    <span>{experiences.filter((item) => item.category === category).length} experiencias</span>
                   </span>
                   <span className="category-arrow"><ArrowUpRight aria-hidden="true" size={17} /></span>
                 </Link>
@@ -76,7 +75,7 @@ export default function Home() {
         <div className="container">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">02 / Selección editorial</p>
+              <p className="eyebrow">Selección editorial</p>
               <h2 id="featured-title">Experiencias <em>destacadas</em></h2>
             </div>
           </div>
@@ -88,16 +87,11 @@ export default function Home() {
         <Image src="/images/kelingking-playa.webp" alt="" fill sizes="100vw" />
         <div className="container journal-inner">
           <div className="journal-copy">
-            <p className="eyebrow">03 / Tu diario personal</p>
+            <p className="eyebrow">Tu diario personal</p>
             <h2 id="journal-title">Tu <em>bitácora de viaje</em></h2>
             <p>Guarda tus experiencias favoritas y lleva un registro visual de los países y categorías que definen tu estilo de viaje.</p>
             <Link href="/profile" className="button button-light">Ver mi perfil <ArrowRight aria-hidden="true" size={17} /></Link>
           </div>
-          <ul className="journal-stats" aria-label="El catálogo en cifras">
-            <li><Sparkles aria-hidden="true" size={20} /><strong>{experiences.length}</strong><span>Experiencias curadas</span></li>
-            <li><Globe aria-hidden="true" size={20} /><strong>{countries.length}</strong><span>Países por explorar</span></li>
-            <li><Layers aria-hidden="true" size={20} /><strong>{categories.length}</strong><span>Categorías únicas</span></li>
-          </ul>
         </div>
       </section>
     </div>

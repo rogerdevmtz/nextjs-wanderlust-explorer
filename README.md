@@ -11,8 +11,8 @@ Explorador de experiencias de viaje desarrollado con Next.js (App Router), React
 - **Filtros de categoría y destino** (ciudad o país) combinables con la búsqueda.
 - **Estado en la URL**: `search`, `category` y `destination` se sincronizan con `useSearchParams` y `usePathname`. Un enlace prefiltrado restaura los controles y los resultados.
 - **Favoritos** gestionados con `useState` en un proveedor compartido y pasados a cada tarjeta mediante props. Se reflejan en Favoritos y en el contador del Perfil.
-- **Paginación** de 12 en 12 con opción de ver las 100 experiencias a la vez.
-- **Experiencia móvil cuidada**: barra de navegación inferior con la sección activa y el contador de favoritos, avisos al guardar o quitar un favorito y desplegables propios accesibles con teclado.
+- **Catálogo completo al entrar**: el Explorador muestra las 100 experiencias en su estado inicial, con orden por precio o valoración y paginación opcional de 12 en 12 (`sort` y `page` en la URL).
+- **Experiencia móvil cuidada**: barra de navegación inferior con la sección activa y el contador de favoritos, avisos al guardar o quitar un favorito (con opción de deshacer), barra fija de precio y guardado en la ficha y desplegables propios accesibles con teclado.
 - **Diseño responsive** para móvil, tablet y escritorio, con soporte de teclado y de la preferencia de movimiento reducido.
 
 ## Capturas
@@ -47,7 +47,7 @@ Explorador de experiencias de viaje desarrollado con Next.js (App Router), React
 | Ruta | Contenido |
 | --- | --- |
 | `/` | Portada con buscador, categorías, experiencias destacadas y resumen del catálogo |
-| `/experiences` | Catálogo con buscador, filtros, chips de filtros activos y paginación |
+| `/experiences` | Catálogo con buscador, filtros, chips de filtros activos, orden y paginación opcional |
 | `/experiences/[id]` | Ficha con galería, datos de la experiencia, precio, valoración y acción de guardar |
 | `/favorites` | Experiencias guardadas durante la visita |
 | `/profile` | Perfil de demostración con el total de favoritos, categorías y países guardados |
@@ -79,7 +79,7 @@ npm start
 src/
 ├── app/          Rutas, layout, página 404 y estilos globales
 ├── components/   Navbar, ExperienceCard, SearchBar, FilterBar y resto de componentes
-├── hooks/        useExperiences: búsqueda, filtros, paginación y estado en la URL
+├── hooks/        useExperiences: búsqueda, filtros, orden, paginación y estado en la URL
 ├── lib/          Etiquetas, formato de precios y opciones de destino
 ├── data/         Dataset tipado de 100 experiencias
 └── types/        Interfaz Experience y categorías
@@ -87,7 +87,7 @@ src/
 
 ## Decisiones técnicas
 
-- **`useExperiences`** concentra el filtrado: lee la URL, normaliza el texto, construye la expresión regular y devuelve los resultados paginados junto con las acciones para actualizar los filtros.
+- **`useExperiences`** concentra el filtrado: lee la URL, normaliza el texto, construye la expresión regular y devuelve los resultados ordenados (y paginados si se elige) junto con las acciones para actualizar los filtros.
 - **`SearchBar`** usa `useEffect` para sincronizar el campo con la URL cuando se navega con Atrás y Adelante, sin provocar bucles.
 - **Favoritos sin persistencia**: el estado vive en un proveedor del layout y se reinicia al recargar la página, como define el alcance del ejercicio. No se usan `localStorage` ni librerías externas de estado.
 - **Desplegables accesibles** propios, con navegación por teclado, en lugar de los selectores nativos del sistema.

@@ -18,7 +18,7 @@ export function HomeSearch() {
         <MapPin aria-hidden="true" size={18} />
         <span>
           <span className="hero-field-label" id="home-destination-label">Destino</span>
-          <Select name="destination" label="Destino" groups={destinationGroups("Todos los destinos")} />
+          <Select name="destination" label="Destino" groups={destinationGroups("Todos")} />
         </span>
       </div>
       <div className="hero-field">
