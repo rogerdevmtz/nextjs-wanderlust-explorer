@@ -63,9 +63,8 @@ export function useExperiences() {
       if (value) next.set(key, value);
       else next.delete(key);
     }
-    // Si se navegaba por páginas, el cambio de filtros vuelve a la primera.
-    if (next.has("page") && next.get("page") !== "todas") next.set("page", "1");
-    else next.delete("page");
+    // Un cambio de filtros vuelve a la primera página (o mantiene «ver todas»).
+    if (next.get("page") !== "todas") next.delete("page");
 
     const query = next.toString();
     const url = query ? `${pathname}?${query}` : pathname;
@@ -74,14 +73,14 @@ export function useExperiences() {
     else window.history.pushState(null, "", url);
   }
 
-  // Estado inicial: todas las experiencias. La paginación es opcional (?page=N).
+  // Paginación de 12 en 12 (?page=N) con la opción de ver todas (?page=todas).
   const rawSort = params.get("sort") ?? "";
   const sort: SortKey = isSortKey(rawSort) ? rawSort : "";
   const sorted = sort ? [...results].sort(sorters[sort]) : results;
   const rawPage = params.get("page");
-  const showAll = !rawPage || rawPage === "todas";
+  const showAll = rawPage === "todas";
   const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE));
-  const page = showAll ? 1 : Math.min(totalPages, Math.max(1, Number.parseInt(rawPage, 10) || 1));
+  const page = showAll ? 1 : Math.min(totalPages, Math.max(1, Number.parseInt(rawPage ?? "1", 10) || 1));
   const pageResults = showAll ? sorted : sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   function pushParam(key: string, value: string) {
@@ -92,7 +91,7 @@ export function useExperiences() {
     window.history.pushState(null, "", query ? `${pathname}?${query}` : pathname);
   }
 
-  const goToPage = (nextPage: number | "todas") => pushParam("page", nextPage === "todas" ? "" : String(nextPage));
+  const goToPage = (nextPage: number | "todas") => pushParam("page", nextPage === "todas" ? "todas" : nextPage > 1 ? String(nextPage) : "");
   const changeSort = (value: string) => pushParam("sort", isSortKey(value) ? value : "");
 
   return {

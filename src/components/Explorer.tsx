@@ -100,7 +100,7 @@ export function Explorer() {
               <nav className="pagination" aria-label="Paginación de resultados">
                 {showAll ? (
                   <button type="button" className="pagination-step" onClick={() => changePage(1)}>
-                    <Rows3 aria-hidden="true" size={17} /> <span>Ver de {PAGE_SIZE} en {PAGE_SIZE}</span>
+                    <Rows3 aria-hidden="true" size={17} /> <span>Ver por páginas</span>
                   </button>
                 ) : (
                   <>
