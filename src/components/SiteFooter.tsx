@@ -49,8 +49,7 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2026 Wanderlust Explorer · Proyecto académico de 4Geeks Academy</p>
-          <p className="footer-note">Datos, precios y perfil ficticios</p>
+          <p>© 2026 Wanderlust Explorer</p>
           <a href="#main-content" className="footer-top-link">Volver arriba <ArrowUp aria-hidden="true" size={16} /></a>
         </div>
       </div>

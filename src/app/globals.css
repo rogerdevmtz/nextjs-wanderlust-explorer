@@ -444,7 +444,6 @@ h1 em, h2 em { color: var(--accent); }
 .site-footer .brand-name > span { color: var(--accent-soft); }
 .site-footer .brand-mark { color: #fff; background: none; }
 .footer-bottom { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; margin-top: clamp(3rem, 6vw, 5rem); padding-top: 1.5rem; border-top: 1px solid #ffffff1a; color: #ffffff99; font-size: .85rem; }
-.footer-note { color: #ffffff66; }
 .footer-top-link { display: inline-flex; align-items: center; gap: .45rem; margin-left: auto; min-height: 46px; padding: 0 1.15rem; border: 1px solid #ffffff40; border-radius: 12px; color: #fff; font-weight: 600; transition: background-color .2s var(--ease-out), border-color .2s var(--ease-out); }
 .footer-top-link:hover { border-color: var(--accent-soft); background: #ffffff0f; }
 .footer-wordmark { margin: clamp(.5rem, 2vw, 1.5rem) 0 -.12em; padding-inline: .05em; overflow: hidden; background: linear-gradient(180deg, #a1dcfde6 0%, #5f97bd99 55%, #23658233 100%); -webkit-background-clip: text; background-clip: text; color: transparent; font: italic 400 clamp(5rem, 23.5vw, 21.5rem)/.95 var(--display); letter-spacing: -.06em; text-align: center; white-space: nowrap; user-select: none; }
