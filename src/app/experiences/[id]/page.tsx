@@ -1,4 +1,4 @@
-import { ArrowRight, BadgeCheck, Heart, MapPin, Star } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BadgeCheck, Heart, MapPin, Star } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -49,14 +49,16 @@ export default async function ExperiencePage({ params }: Props) {
     shownDestinations.add(item.destination);
     if (related.length === 3) break;
   }
+  const city = destination.split(", ")[0];
+  const sameCity = experiences.filter((item) => item.destination === destination && item.id !== id).slice(0, 5);
 
   return (
-    <div className="container inner-page">
-      <Suspense fallback={<ExplorerReturnLink />}>
-        <FilteredExplorerReturnLink />
-      </Suspense>
-      <article className="detail-layout">
-        <header className="detail-heading">
+    <>
+      <article className="detail-page">
+        <ExperienceGallery key={id} photos={photos}>
+          <Suspense fallback={<ExplorerReturnLink />}>
+            <FilteredExplorerReturnLink />
+          </Suspense>
           <nav className="breadcrumb" aria-label="Ruta de navegación">
             <Link href="/">Inicio</Link>
             <span aria-hidden="true">/</span>
@@ -71,18 +73,42 @@ export default async function ExperiencePage({ params }: Props) {
             <p className="detail-location"><MapPin aria-hidden="true" size={16} /> {place}</p>
           </div>
           <h1>{words.join(" ")} <em>{accent}</em></h1>
-          <p className="detail-lead">{description}</p>
-        </header>
-        <div className="detail-body">
-          <ExperienceGallery key={id} photos={photos} />
+        </ExperienceGallery>
+
+        <div className="container detail-body">
+          <div className="detail-main">
+            <p className="detail-lead">{description}</p>
+            {sameCity.length > 0 && (
+              <section className="detail-index" aria-labelledby="same-city-title">
+                <div className="detail-index-heading">
+                  <h2 id="same-city-title">Más en {city}</h2>
+                  <Link href={`/experiences?destination=${encodeURIComponent(city)}`} className="text-button">
+                    Ver todas <ArrowRight aria-hidden="true" size={16} />
+                  </Link>
+                </div>
+                <ol>
+                  {sameCity.map((item) => (
+                    <li key={item.id}>
+                      <Link href={`/experiences/${item.id}`}>
+                        <span className="detail-index-category">{categoryLabels[item.category]}</span>
+                        <span className="detail-index-title">{item.title}</span>
+                        <span className="detail-index-price">{priceLabel(item.price)}</span>
+                        <ArrowUpRight aria-hidden="true" size={18} />
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
+          </div>
           <aside className="detail-content" aria-label="Precio, valoración y favoritos">
             <div className="detail-price">
               <div>
-                <span className="eyebrow">Precio por persona</span>
-                <p><strong>{priceLabel(price)}</strong> <small>/ persona</small></p>
+                <span className="detail-label">Precio por persona</span>
+                <p><strong>{priceLabel(price)}</strong></p>
               </div>
               <div className="detail-price-rating">
-                <span className="eyebrow">Valoración</span>
+                <span className="detail-label">Valoración</span>
                 <p><Star aria-hidden="true" size={18} /> <strong>{ratingLabel}</strong> <small>/ 5</small></p>
               </div>
             </div>
@@ -99,16 +125,16 @@ export default async function ExperiencePage({ params }: Props) {
         </div>
       </article>
       {related.length > 0 && (
-        <section className="related-section" aria-labelledby="related-title">
+        <section className="container related-section" aria-labelledby="related-title">
           <div className="section-heading">
-            <h2 id="related-title">También te puede interesar</h2>
+            <h2 id="related-title">Más de {categoryLabels[category].toLowerCase()} en otros destinos</h2>
             <Link href={`/experiences?category=${category.toLowerCase()}`} className="text-button">
-              Ver más de {categoryLabels[category].toLowerCase()} <ArrowRight aria-hidden="true" size={17} />
+              Ver todas <ArrowRight aria-hidden="true" size={17} />
             </Link>
           </div>
           <ExperienceGrid experiences={related} />
         </section>
       )}
-    </div>
+    </>
   );
 }
